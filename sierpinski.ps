@@ -1,0 +1,146 @@
+/av
+{
+	add
+	2
+	div
+}
+def
+
+/getav
+{
+	6 5 roll
+	dup
+	7 2 roll
+	4 3 roll
+	dup
+	8 7 roll
+	av
+	7 1 roll
+	4 1 roll
+}
+def
+
+/xyroll
+{
+	exch
+	6 1 roll
+	5 3 roll
+	exch
+	5 2 roll
+	3 1 roll
+	exch
+	3 2 roll
+}
+def
+
+/interlace
+{
+	3 2 roll
+	5 1 roll
+	3 2 roll
+	exch
+}
+def
+
+/innertriangle
+%takes x1 y1 x2 y2 x3 y3
+{
+6 copy
+3 {getav xyroll} repeat
+6 5 roll
+3 {getav xyroll} repeat
+6 {pop} repeat
+interlace
+fill_triangle
+}
+def
+
+/fill_triangle
+% x0 y0 x1 y1 x2 y2  fill_triangle -
+{
+   newpath
+   moveto
+   lineto
+   lineto
+   closepath
+   fill
+   stroke
+} def
+
+/f1
+%takes x1 y1 x2 y2 x3 y3 r
+%draws the biggest triangle
+%sets different color
+%leaves three coordinates and r on the stack and calls f2
+{
+7 1 roll
+6 copy
+fill_triangle
+0.8 0.8 0.8 setrgbcolor
+7 6 roll
+f2
+}
+def
+
+/f2
+%takes x1 y1 x2 y2 x3 y3 r
+{
+dup
+0 eq not
+{1 sub
+7 1 roll
+innertriangle
+f5
+6 2 roll
+f5
+6 2 roll
+f5
+} if
+7 {pop} repeat
+}
+def
+
+/f3
+{
+6 copy
+f4
+6 4 roll
+f4
+6 2 roll
+4 {pop} repeat
+}
+def
+
+/f4
+{
+6 5 roll
+dup
+7 1 roll
+3 2 roll
+dup
+4 1 roll
+av
+7 1 roll
+5 4 roll
+dup
+6 1 roll
+exch
+dup
+3 1 roll
+av
+7 1 roll
+}
+def
+
+/f5
+{
+f3
+13 12 roll
+dup
+14 1 roll
+f2
+}
+def
+
+%50 100 500 400 300 700 16 f1
+50 100 600 100 325 576 12 f1
